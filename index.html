@@ -427,11 +427,13 @@
   const overlay = document.getElementById('donateOverlay');
   const openDonate  = ()=> overlay.classList.add('show');
   const closeDonate = ()=> overlay.classList.remove('show');
-  // auto-show once per browser session, ~700ms after the name lands
+  // auto-show once per page load (re-pops on refresh/revisit),
+  // ~2.2s after the name lands so there's time to read it
+  let donateShown = false;
   function maybeShowDonate(){
-    if(sessionStorage.getItem('aipac_donate_shown')) return;
-    sessionStorage.setItem('aipac_donate_shown','1');
-    setTimeout(openDonate, 700);
+    if(donateShown) return;
+    donateShown = true;
+    setTimeout(openDonate, 2200);
   }
   document.getElementById('donateClose').addEventListener('click', closeDonate);
   document.getElementById('donateLater').addEventListener('click', closeDonate);
